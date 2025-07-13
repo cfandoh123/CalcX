@@ -23,19 +23,51 @@ final class CalcXUITests: XCTestCase {
     }
 
     @MainActor
-    func testExample() throws {
-        // UI tests must launch the application that they test.
+    func testBasicCalculation() throws {
         let app = XCUIApplication()
         app.launch()
-
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        app.buttons["2"].tap()
+        app.buttons["+"].tap()
+        app.buttons["2"].tap()
+        app.buttons["="].tap()
+        let result = app.staticTexts.element(matching: .any, identifier: nil).matching(NSPredicate(format: "label == '4'"))[0]
+        XCTAssertTrue(result.exists, "Result should be 4")
     }
 
     @MainActor
-    func testLaunchPerformance() throws {
-        // This measures how long it takes to launch your application.
-        measure(metrics: [XCTApplicationLaunchMetric()]) {
-            XCUIApplication().launch()
-        }
+    func testClearAndDelete() throws {
+        let app = XCUIApplication()
+        app.launch()
+        app.buttons["1"].tap()
+        app.buttons["2"].tap()
+        app.buttons["Del"].tap()
+        XCTAssertTrue(app.staticTexts["1"].exists)
+        app.buttons["C"].tap()
+        XCTAssertFalse(app.staticTexts["1"].exists)
+    }
+
+    @MainActor
+    func testPercent() throws {
+        let app = XCUIApplication()
+        app.launch()
+        app.buttons["5"].tap()
+        app.buttons["0"].tap()
+        app.buttons["%"].tap()
+        let result = app.staticTexts.element(matching: .any, identifier: nil).matching(NSPredicate(format: "label == '0.5'"))[0]
+        XCTAssertTrue(result.exists, "Result should be 0.5")
+    }
+
+    @MainActor
+    func testThemeToggle() throws {
+        let app = XCUIApplication()
+        app.launch()
+        let moon = app.images["moon.fill"]
+        let sun = app.images["sun.max.fill"]
+        XCTAssertTrue(moon.exists)
+        XCTAssertTrue(sun.exists)
+        // Tap the toggle (simulate tap on the capsule area)
+        let toggle = app.otherElements.containing(.image, identifier: "moon.fill").element(boundBy: 0)
+        if toggle.exists { toggle.tap() }
+        // No crash = pass; for more, check color changes if possible
     }
 }
