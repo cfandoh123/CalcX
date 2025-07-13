@@ -19,7 +19,7 @@ A beautiful, modern calculator app for iOS built with SwiftUI.
 
 | Light Mode | Dark Mode |
 |:----------:|:---------:|
-| ![Light](../Screenshot%202025-07-12%20at%2012.20.38%E2%80%AFPM.png) | ![Dark](../Screenshot%202025-07-13%20at%203.11.26%E2%80%AFAM.png) |
+| ![Light](../Screenshot%202025-07-12%20at%2012.20.38%E2%80%AFPM.png) | ![Dark](image/dark_theme_.png) |
 
 ---
 
